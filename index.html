@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Music Web App</title>
+  <title>Music App Web</title>
   <style>
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       background: #121212;
-      color: white;
+      color: #fff;
     }
     header {
-      padding: 12px;
       background: #1db954;
+      padding: 14px;
       text-align: center;
+      font-size: 20px;
       font-weight: bold;
-      font-size: 18px;
     }
     .tabs {
       display: flex;
@@ -27,22 +28,26 @@
       padding: 12px;
       text-align: center;
       cursor: pointer;
-      border-bottom: 2px solid transparent;
+      border-bottom: 3px solid transparent;
     }
     .tab.active {
-      border-bottom: 2px solid #1db954;
+      border-bottom: 3px solid #1db954;
       color: #1db954;
+    }
+    .content {
+      height: calc(100vh - 104px);
     }
     iframe {
       width: 100%;
-      height: calc(100vh - 96px);
+      height: 100%;
       border: none;
+      background: #000;
     }
-    .footer {
+    .note {
       text-align: center;
-      padding: 8px;
       font-size: 12px;
       opacity: 0.6;
+      padding: 6px;
     }
   </style>
 </head>
@@ -51,27 +56,33 @@
 <header>🎧 Music App (Web)</header>
 
 <div class="tabs">
-  <div class="tab active" onclick="openTab('sc')">SoundCloud</div>
-  <div class="tab" onclick="openTab('yt')">YouTube</div>
+  <div class="tab active" onclick="openSC()">SoundCloud</div>
+  <div class="tab" onclick="openYT()">YouTube</div>
 </div>
 
-<iframe id="player" src="https://soundcloud.com/search"></iframe>
+<div class="content">
+  <iframe id="player" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/charts/top"></iframe>
+</div>
 
-<div class="footer">Made by ote • chạy được trên GitHub Pages</div>
+<div class="note">Chạy tốt trên GitHub Pages • mở bằng HTTPS</div>
 
 <script>
-  function openTab(type) {
-    const iframe = document.getElementById('player');
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(t => t.classList.remove('active'));
+  const player = document.getElementById('player');
+  const tabs = document.querySelectorAll('.tab');
 
-    if (type === 'sc') {
-      iframe.src = 'https://soundcloud.com/search';
-      tabs[0].classList.add('active');
-    } else {
-      iframe.src = 'https://m.youtube.com';
-      tabs[1].classList.add('active');
-    }
+  function setActive(index) {
+    tabs.forEach(t => t.classList.remove('active'));
+    tabs[index].classList.add('active');
+  }
+
+  function openSC() {
+    setActive(0);
+    player.src = 'https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/charts/top';
+  }
+
+  function openYT() {
+    setActive(1);
+    player.src = 'https://www.youtube.com/embed?listType=search&list=music';
   }
 </script>
 
